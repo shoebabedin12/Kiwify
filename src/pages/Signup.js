@@ -10,6 +10,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
     const { email, repEatemail, password } = e.target.elements;
     console.log({ email: email.value, repEatemail: repEatemail.value, password: password.value});
     if (email.value === "") {
@@ -29,7 +30,7 @@ const Signup = () => {
     }
     // else if (password.value === "") {
     //   setPass(false);
-    //   setIsChecked(true);
+    //   setIsChecked(!isChecked);
     // }
     else {
       setPass(false);
@@ -159,7 +160,7 @@ const Signup = () => {
             <label className="relative flex items-start mt-2">
               <div className="flex items-center h-5">
                 <input
-                  type="checkbox"  onChange={(e) => setIsChecked(e)}
+                  type="checkbox"  onChange={() => setIsChecked(!isChecked)}
                   className={`form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out cursor-pointer ${isChecked ? 'border-red-500' : ''}`}
                 />
               </div>
