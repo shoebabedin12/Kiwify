@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Signup = () => {
@@ -7,37 +7,42 @@ const Signup = () => {
   const [sameEmail, setSameEmail] = useState(false);
   const [pass, setPass] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
+  const checkbox = useRef();
+
+  // const handleChange = (e) => {
+  //  const { value, checked } = e.target;
+
+  // console.log(`${value} is ${checked}`);
+  // }
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    const { email, repEatemail, password } = e.target.elements;
-    console.log({ email: email.value, repEatemail: repEatemail.value, password: password.value});
+
+    const { email, repeatEmail, password } = e.target;
+    console.log({
+      email: email.value,
+      repeatEmail: repeatEmail.value,
+      password: password.value,
+    });
     if (email.value === "") {
       setEmail(true);
-    } 
-    else if (repEatemail.value === "") {
+    } else if (repeatEmail.value === "") {
       setEmail(false);
       setConfirmEmail(true);
-    } 
-    else if (repEatemail.value === email.value) {
+    } else if (repeatEmail.value !== email.value) {
       setConfirmEmail(false);
       setSameEmail(true);
-    }
-    else if (password.value === "") {
+    } else if (password.value === "") {
       setSameEmail(false);
       setPass(true);
-    }
-    // else if (password.value === "") {
-    //   setPass(false);
-    //   setIsChecked(!isChecked);
-    // }
-    else {
+    } else if (checkbox.current.checked == false) {
       setPass(false);
+      setIsChecked(true);
+    } else {
+      setIsChecked(false);
     }
     // console.log(data);
   };
-
   console.log(isChecked);
   return (
     <>
@@ -54,7 +59,7 @@ const Signup = () => {
         </h2>
         <p className="mt-2 text-center text-base leading-5 text-gray-600">
           <font style={{ verticalAlign: "inherit" }}>
-            <font style={{ verticalAlign: "inherit" }}>Or</font>
+            <font style={{ verticalAlign: "inherit" }}>Or </font>
           </font>
           <Link
             to="/"
@@ -69,7 +74,10 @@ const Signup = () => {
         </p>
       </div>
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-        <form className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10" onSubmit={handleSubmit}>
+        <form
+          className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10"
+          onSubmit={handleSubmit}
+        >
           <div>
             <label className="block text-sm font-medium leading-5 mb-1 text-gray-700">
               <font style={{ verticalAlign: "inherit" }}>
@@ -81,26 +89,30 @@ const Signup = () => {
                 type="email"
                 autoComplete="off"
                 name="email"
-                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${email ? 'border-red-500' : ''} w-full`}
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${
+                  email ? "border-red-500" : ""
+                } w-full`}
               />
               <div className="text-red-500 text-xs mt-1">
                 <div></div>
               </div>
             </div>
             <div>
-              {email && <div className="text-xs text-red-500">
-                <font style={{ verticalAlign: "inherit" }}>
+              {email && (
+                <div className="text-xs text-red-500">
                   <font style={{ verticalAlign: "inherit" }}>
-                    This field is mandatory
+                    <font style={{ verticalAlign: "inherit" }}>
+                      This field is mandatory
+                    </font>
                   </font>
-                </font>
-              </div>}
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-6">
             <label className="block text-sm font-medium leading-5 mb-1 text-gray-700">
               <font style={{ verticalAlign: "inherit" }}>
-                <font style={{ verticalAlign: "inherit" }}>repeat email</font>
+                <font style={{ verticalAlign: "inherit" }}>Repetir e-mail</font>
               </font>
             </label>
             <div>
@@ -108,27 +120,33 @@ const Signup = () => {
                 type="email"
                 autoComplete="off"
                 name="repeatEmail"
-                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${sameEmail || confirmEmail  ? 'border-red-500' : ''} w-full`}
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${
+                  sameEmail || confirmEmail ? "border-red-500" : ""
+                } w-full`}
               />
               <div className="text-red-500 text-xs mt-1">
                 <div></div>
               </div>
             </div>{" "}
             <div>
-              {sameEmail && <div className="text-xs text-red-500">
-                <font style={{ verticalAlign: "inherit" }}>
+              {sameEmail && (
+                <div className="text-xs text-red-500">
                   <font style={{ verticalAlign: "inherit" }}>
-                    The two emails must be the same.
+                    <font style={{ verticalAlign: "inherit" }}>
+                      The two emails must be the same.
+                    </font>
                   </font>
-                </font>
-              </div>}
-            {confirmEmail &&  <div className="text-xs text-red-500">
-                <font style={{ verticalAlign: "inherit" }}>
+                </div>
+              )}
+              {confirmEmail && (
+                <div className="text-xs text-red-500">
                   <font style={{ verticalAlign: "inherit" }}>
-                    This field is mandatory
+                    <font style={{ verticalAlign: "inherit" }}>
+                      This field is mandatory
+                    </font>
                   </font>
-                </font>
-              </div>}
+                </div>
+              )}
             </div>
           </div>
           <div className="mt-6">
@@ -138,21 +156,24 @@ const Signup = () => {
               </font>
             </label>
             <div>
-             
               <input
                 type="password"
                 autoComplete="off"
                 name="password"
-                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${pass ? 'border-red-500' : ''} w-full`}
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${
+                  pass ? "border-red-500" : ""
+                } w-full`}
               />{" "}
               <div className="text-red-500 text-xs mt-1">
-               {pass && <div>
-                  <font style={{ verticalAlign: "inherit" }}>
+                {pass && (
+                  <div>
                     <font style={{ verticalAlign: "inherit" }}>
-                      This field is mandatory
+                      <font style={{ verticalAlign: "inherit" }}>
+                        This field is mandatory
+                      </font>
                     </font>
-                  </font>
-                </div>}
+                  </div>
+                )}
               </div>
             </div>
           </div>{" "}
@@ -160,8 +181,11 @@ const Signup = () => {
             <label className="relative flex items-start mt-2">
               <div className="flex items-center h-5">
                 <input
-                  type="checkbox"  onChange={() => setIsChecked(!isChecked)}
-                  className={`form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out cursor-pointer ${isChecked ? 'border-red-500' : ''}`}
+                  type="checkbox"
+                  ref={checkbox}
+                  className={`form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out cursor-pointer ${
+                    isChecked ? "border-red-500" : ""
+                  }`}
                 />
               </div>
               <div className="ml-2 text-sm leading-5">
@@ -202,7 +226,8 @@ const Signup = () => {
                   <font style={{ verticalAlign: "inherit" }}>
                     <font style={{ verticalAlign: "inherit" }}> , </font>
                   </font>
-                  <Link to="#"
+                  <Link
+                    to="#"
                     target="_blank"
                     className="underline"
                     rel="noreferrer"
@@ -215,19 +240,24 @@ const Signup = () => {
                   </Link>
                   <font style={{ verticalAlign: "inherit" }}></font>
                 </span>
-               {isChecked && <div className="text-red-500 border-b-0">
-                  <font style={{ verticalAlign: "inherit" }}>
+                {isChecked && (
+                  <div className="text-red-500 border-b-0">
                     <font style={{ verticalAlign: "inherit" }}>
-                      (This field is mandatory)
+                      <font style={{ verticalAlign: "inherit" }}>
+                        (This field is mandatory)
+                      </font>
                     </font>
-                  </font>
-                </div>}
+                  </div>
+                )}
               </div>
             </label>
           </div>
           <div className="mt-6">
             <span className="block w-full rounded-md shadow-sm">
-              <button className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out">
+              <button
+                type="submit"
+                className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-500 focus:outline-none focus:border-indigo-700 focus:shadow-outline-indigo active:bg-indigo-700 transition duration-150 ease-in-out"
+              >
                 <font style={{ verticalAlign: "inherit" }}>
                   <font style={{ verticalAlign: "inherit" }}>
                     Create an account

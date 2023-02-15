@@ -31,12 +31,11 @@ const Login = () => {
           Login to your account
         </h2>
         <p className="mt-2 text-center text-base leading-5 text-gray-600">
-          Or
-          <Link
+          Or  <Link
             to="/signup"
             className="font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:underline transition ease-in-out duration-150"
           >
-            register
+             register
           </Link>
         </p>
       </div>
