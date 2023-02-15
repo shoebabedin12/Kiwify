@@ -10,15 +10,16 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const { email, repEatemail, password, isChecked } = e.target.elements;
-    console.log({ email: email.value, repEatemail: repEatemail.value, password: password.value, isChecked: isChecked.value });
+    const { email, repEatemail, password } = e.target.elements;
+    console.log({ email: email.value, repEatemail: repEatemail.value, password: password.value});
     if (email.value === "") {
       setEmail(true);
-    } else if (password.value === "") {
+    } 
+    else if (repEatemail.value === "") {
       setEmail(false);
       setConfirmEmail(true);
     } 
-    else if (password.value === "") {
+    else if (repEatemail.value === email.value) {
       setConfirmEmail(false);
       setSameEmail(true);
     }
@@ -26,15 +27,17 @@ const Signup = () => {
       setSameEmail(false);
       setPass(true);
     }
-    else if (password.value === "") {
-      setPass(false);
-      setIsChecked(true);
-    }
+    // else if (password.value === "") {
+    //   setPass(false);
+    //   setIsChecked(true);
+    // }
     else {
-      setIsChecked(false);
+      setPass(false);
     }
     // console.log(data);
   };
+
+  console.log(isChecked);
   return (
     <>
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
@@ -77,7 +80,7 @@ const Signup = () => {
                 type="email"
                 autoComplete="off"
                 name="email"
-                className="form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 border-red-500 w-full"
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${email ? 'border-red-500' : ''} w-full`}
               />
               <div className="text-red-500 text-xs mt-1">
                 <div></div>
@@ -104,7 +107,7 @@ const Signup = () => {
                 type="email"
                 autoComplete="off"
                 name="repeatEmail"
-                className="form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 border-red-500 w-full"
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${sameEmail || confirmEmail  ? 'border-red-500' : ''} w-full`}
               />
               <div className="text-red-500 text-xs mt-1">
                 <div></div>
@@ -139,7 +142,7 @@ const Signup = () => {
                 type="password"
                 autoComplete="off"
                 name="password"
-                className="form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 border-red-500 w-full"
+                className={`form-input block py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:shadow-outline-blue focus:border-blue-300 transition duration-150 ease-in-out sm:text-sm sm:leading-5 ${pass ? 'border-red-500' : ''} w-full`}
               />{" "}
               <div className="text-red-500 text-xs mt-1">
                {pass && <div>
@@ -157,9 +160,9 @@ const Signup = () => {
               <div className="flex items-center h-5">
                 <input
                   type="checkbox"  onChange={(e) => setIsChecked(e)}
-                  className="form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out cursor-pointer border-red-500"
+                  className={`form-checkbox h-4 w-4 text-indigo-600 transition duration-150 ease-in-out cursor-pointer ${isChecked ? 'border-red-500' : ''}`}
                 />
-              </div>{" "}
+              </div>
               <div className="ml-2 text-sm leading-5">
                 <span className="font-medium text-gray-700">
                   <font style={{ verticalAlign: "inherit" }}>
